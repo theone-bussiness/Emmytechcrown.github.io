@@ -123,6 +123,22 @@ Car Batteries & Tyres</h1>
     <h1>Quality Car Batteries & Tyres</h1>
     <p>Reliable, Affordable, Durable – Shop Now!</p>
   </section>
+  
+  <div style="text-align:center; padding:20px;">
+  <!-- Search box -->
+  <input type="text" id="searchBox" placeholder="Search products..." 
+         style="padding:10px; width:40%; max-width:300px; margin-right:10px;">
+
+  <!-- Price filters -->
+  <input type="number" id="minPrice" placeholder="Min Price" 
+         style="padding:10px; width:100px; margin-right:5px;">
+  <input type="number" id="maxPrice" placeholder="Max Price" 
+         style="padding:10px; width:100px; margin-right:5px;">
+
+  <button onclick="filterProducts()" style="padding:10px 20px; background:#e63946; color:white; border:none; border-radius:5px;">
+    Filter
+  </button>
+</div>
 
   <section id="products" class="products">
     <!-- Example Product 1 -->
@@ -167,6 +183,33 @@ Car Batteries & Tyres</h1>
   <footer>
     <p>&copy; 2025 Car Batteries & Tyres Shop. All Rights Reserved.</p>
   </footer>
+  <script>
+function filterProducts() {
+  const searchText = document.getElementById('searchBox').value.toLowerCase();
+  const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
+  const maxPrice = parseInt(document.getElementById('maxPrice').value) || Infinity;
+
+  const productCards = document.querySelectorAll('.product-card');
+
+  productCards.forEach(card => {
+    const productName = card.querySelector('h3').innerText.toLowerCase();
+    const productDesc = card.querySelector('p').innerText.toLowerCase();
+    const productPriceText = card.querySelector('.price').innerText.replace(/[^0-9]/g, ''); 
+    const productPrice = parseInt(productPriceText);
+
+    const matchesSearch = productName.includes(searchText) || productDesc.includes(searchText);
+    const matchesPrice = productPrice >= minPrice && productPrice <= maxPrice;
+
+    if (matchesSearch && matchesPrice) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+
 </body>
 </html>
+
 
